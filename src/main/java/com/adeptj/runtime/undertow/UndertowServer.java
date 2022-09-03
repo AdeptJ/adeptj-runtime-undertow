@@ -127,7 +127,7 @@ public class UndertowServer extends AbstractServer {
 
     @Override
     public void start(String[] args, ServletDeployment deployment) {
-        Config undertowConf = ConfigProvider.getInstance().getReferenceConfig().getConfig("undertow");
+        Config undertowConf = ConfigProvider.getInstance().getServerConfig(this.getRuntime());
         Config httpConf = undertowConf.getConfig(Constants.KEY_HTTP);
         int port = this.resolvePort(httpConf);
         LOGGER.info("Starting AdeptJ Runtime @port: [{}]", port);

@@ -30,6 +30,8 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.servlet.handlers.ServletInitialHandler;
 
+import static com.adeptj.runtime.kernel.ServerRuntime.UNDERTOW;
+
 /**
  * Handler returned by this HandlerWrapper is invoked before any Servlet handlers are invoked.
  * <p>
@@ -68,7 +70,7 @@ public final class ServletInitialHandlerWrapper implements HandlerWrapper {
      */
     @Override
     public HttpHandler wrap(HttpHandler servletInitialHandler) {
-        Config cfg = ConfigProvider.getInstance().getReferenceConfig().getConfig("undertow");
+        Config cfg = ConfigProvider.getInstance().getServerConfig(UNDERTOW);
         Predicate prefix = Predicates.prefix(cfg.getString(RESOURCE_PREFIX));
         Predicate suffixes = Predicates.suffixes(cfg.getStringList(RESOURCE_EXTNS).toArray(new String[0]));
         ClassPathResourceManager rm = new ClassPathResourceManager(this.getClass().getClassLoader(),
